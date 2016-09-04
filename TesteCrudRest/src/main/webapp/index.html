@@ -1,0 +1,75 @@
+<html ng-app="primeiroModulo">
+<head>
+<meta charset="UTF-8"/>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.19/angular.js"></script>
+<script type="text/javascript">
+	angular.module('primeiroModulo', []).controller('primeiroControle', ['$http',function($http){
+		self = this;
+		
+		self.listaProduto=[{descricao:"monitor",estoque:10,valor:20},{descricao:"computador",estoque:10,valor:20}];
+		console.log(self.listaProduto[0]);
+		self.enviar=function(){		
+			self.listaProduto.push(self.produto);
+			self.produto='';
+
+			$http.post("http://localhost:8080/TesteCurdRest/resource/produto/inserir", self.produto).then(function(response)
+					{
+				console.log)('chamou o web service'+response.data);
+				}, function(errResponse)$http
+				{
+					console.error('Erro ao chamar o web service')
+					}
+			
+			console.log(self.listaProduto);
+		};
+		
+		
+		
+	}]);
+
+</script>
+
+</head>
+
+<body ng-controller="primeiroControle as ctrl">
+	
+	<table border="1">
+	<th>Descricao</th>
+	<th>Estoque</th>
+	<th>Valor</th>
+	
+	<tr ng-repeat="prod in ctrl.listaproduto">
+	<td>{{prod.descricao}}</td>
+	<td>{{prod.estoque}}</td>
+	<td>{{prod.valor}}</td>
+	</tr>
+	</table>
+	
+	<table border="1">
+	<th>Descrição</th>
+	<th>Qtde. Estoque</th>
+	<th>Valor unitário</th>
+		<tr ng-repeat="prod in ctrl.listaproduto">
+		<td>{{prod.descricao}}</td>
+		<td>{{prod.estoque}}</td>
+		<td>{{prod.valor}}</td>
+		</tr>
+	</table>
+	
+	
+	<h4>Cadastro de Produtos</h4>
+	<br/>
+	<form name="formProduto"ng-submit="ctrl.enviar()">
+	Descricao: <input type="text" ng-model="ctrl.produto.descricao" /> <br>
+	Quantidade Estoque <input type="number" ng-model="ctrl.produto.estoque"/><br>
+	Valor Unitario <input type="number" ng-model="ctrl.produto.valor"/><br>
+	<input type="submit" value="Cadastrar"/>
+	</form>
+	
+	
+	
+	
+	
+
+</body>
+</html>
