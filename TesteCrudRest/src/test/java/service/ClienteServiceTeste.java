@@ -2,6 +2,9 @@ package service;
 
 import static org.mockito.Mockito.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.ws.rs.core.Response;
 
 import org.junit.Assert;
@@ -24,7 +27,7 @@ public class ClienteServiceTeste {
 	DAOGenerico dao;
 	
 	@Test
-	public void VerificarAdicionarCliente()
+	public void verificarAdicionarCliente()
 	{
 		ClienteService clienteService = new ClienteService(dao);
 		Cliente c1 = new Cliente();
@@ -37,7 +40,7 @@ public class ClienteServiceTeste {
 	}
 	
 	@Test
-	public void VerificarAlterarCliente()
+	public void verificarAlterarCliente()
 	{
 		ClienteService clienteService = new ClienteService(dao);
 		Cliente c1 = new Cliente();
@@ -53,19 +56,52 @@ public class ClienteServiceTeste {
 	}
 	
 	@Test
-	public void VerificarExcluirCliente() throws Exception
+	public void verificarExcluirCliente() throws Exception
 	{
 		ClienteService clienteService = new ClienteService(dao);
 		Cliente c1 = new Cliente();
 		c1.setNome("Roberto");
 		c1.setIdade(30);
 		
-		
 		when(dao.recupera(Cliente.class, 1L)).thenReturn(c1);
 		Response novoResultado = clienteService.excluir(1L);
 		Assert.assertEquals("cadastro excluído.", novoResultado.getEntity());
 		verify(dao).excluir(c1);
 		
+	}
+	
+	@Test
+	 public void testaListarClientesMaiores()
+	 {
+		 ClienteService clienteService = new ClienteService(dao);
+		 List<Cliente> resultadoDAO = new ArrayList<Cliente>();
+		 Cliente clienteMaior = new Cliente();
+		 clienteMaior.setId(1l);
+		 clienteMaior.setNome("Augusto Pedro");
+		 clienteMaior.setIdade(23);
+		 resultadoDAO.add(clienteMaior);
+		 Cliente clienteMenor = new Cliente();
+		 clienteMenor.setId(2l);
+		 clienteMenor.setNome("Rubens");
+		 clienteMenor.setIdade(12);
+		 resultadoDAO.add(clienteMenor);
+		 when(dao.lista(Cliente.class)).thenReturn(resultadoDAO);
+		 List<Cliente> resultado = clienteService.listarMaiores();
+		 Assert.assertEquals(1, resultado.size());
+		 resultado.get(0);
+		 Cliente clienteRetornado = resultado.get(0);
+		 Assert.assertTrue("O Cliente Retornado deveria ser Maior de Idade",clienteRetornado.getIdade()>=18);
+	 }
+	
+	public void testarClienteService(){
+		ClienteService servicoCliente = new ClienteService(dao);
+		ArrayList<Cliente> retornoNumeroCliente = new ArrayList<Cliente>();
+		retornoNumeroCliente.add(new Cliente());
+		retornoNumeroCliente.add(new Cliente());
+		retornoNumeroCliente.add(new Cliente());
+		retornoNumeroCliente.add(new Cliente());
+		
+		when(dao.lista(Cliente.class)).thenReturn(retornoNumeroCliente);
 	}
 	
 	

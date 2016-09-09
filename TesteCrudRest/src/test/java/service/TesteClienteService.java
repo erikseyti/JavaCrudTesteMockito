@@ -98,6 +98,9 @@ public class TesteClienteService {
 	
 	//TODO testar os outros métodos da classe ClienteService
 
+	
+	
+	
 	@Test
 	public void calcularSoma()
 	{
