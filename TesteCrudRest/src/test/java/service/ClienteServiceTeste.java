@@ -93,7 +93,8 @@ public class ClienteServiceTeste {
 		 Assert.assertTrue("O Cliente Retornado deveria ser Maior de Idade",clienteRetornado.getIdade()>=18);
 	 }
 	
-	public void testarClienteService(){
+	@Test
+	public void testarListaClienteService(){
 		ClienteService servicoCliente = new ClienteService(dao);
 		ArrayList<Cliente> retornoNumeroCliente = new ArrayList<Cliente>();
 		retornoNumeroCliente.add(new Cliente());
@@ -103,6 +104,21 @@ public class ClienteServiceTeste {
 		
 		when(dao.lista(Cliente.class)).thenReturn(retornoNumeroCliente);
 	}
+	
+	@Test
+	public void testarBuscaClienteService()
+	{
+		ClienteService servicoCliente = new ClienteService(dao);
+		Cliente cliente1 = new Cliente();
+		Cliente cliente2 = new Cliente();
+		when(dao.recupera(Cliente.class,1L)).thenReturn(cliente1);
+		when(dao.recupera(Cliente.class,2L)).thenReturn(cliente2);
+		Cliente retornoCliente = servicoCliente.buscar(1L);
+		Assert.assertEquals(cliente1, retornoCliente);
+		
+	}
+	
+	
 	
 	
 }

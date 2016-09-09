@@ -42,6 +42,11 @@ public class ProdutoService extends Application {
 //		return Response.status(401).entity("Não autorizado").build();
 //	}
 	
+	public ProdutoService(DAOGenerico dao) {
+		this.dao = dao;
+	}
+
+
 	//Sem utilizar o Token
 	@POST
 	@Path("/inserir")
