@@ -103,6 +103,8 @@ public class ClienteServiceTeste {
 		retornoNumeroCliente.add(new Cliente());
 		
 		when(dao.lista(Cliente.class)).thenReturn(retornoNumeroCliente);
+		List<Cliente> tamanhoListaCliente = servicoCliente.listar();
+		Assert.assertEquals(retornoNumeroCliente.size(),tamanhoListaCliente.size());
 	}
 	
 	@Test

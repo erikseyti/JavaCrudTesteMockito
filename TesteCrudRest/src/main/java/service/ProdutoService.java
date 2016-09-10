@@ -122,6 +122,7 @@ public class ProdutoService extends Application {
 		}
 		return Response.status(401).entity("{\"error\": \"Não Autorizado\"}").build();
 	}
+	
 
 	public boolean autenticacao(String token) {
 		if (token.equals("123")) {
